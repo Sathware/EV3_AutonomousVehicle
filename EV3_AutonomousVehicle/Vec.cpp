@@ -1,8 +1,6 @@
 #include "Vec.h"
 #include <cmath>
 
-constexpr float ScalarToDegrees = 180.0f / 3.141592653589793238463f;
-
 Vec::Vec(float xIn, float yIn)
 	: x(xIn), y(yIn)
 {
@@ -53,7 +51,7 @@ bool Vec::operator==(const Vec& other) const
 
 int Vec::GetAngle() const
 {
-	int degrees = int(atan2f(y, x) * ScalarToDegrees);
+	int degrees = int(atan2f(y, x) * 180.0f / 3.141592653589793238463f);//Converts angle to degrees
 	if (degrees < 0)//Ensures that the angles returned is between [0, 360)
 		degrees += 360;
 	return degrees;

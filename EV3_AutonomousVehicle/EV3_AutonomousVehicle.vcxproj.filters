@@ -9,11 +9,11 @@
     </Filter>
     <Filter Include="Header Files">
       <UniqueIdentifier>{2d410ecd-4ca7-4747-ba3f-75ab77d89a18}</UniqueIdentifier>
-      <Extensions>*.h</Extensions>
+      <Extensions>h</Extensions>
     </Filter>
     <Filter Include="Source Files">
       <UniqueIdentifier>{0cd2c119-9a2f-47c4-8d75-e8e8ca6a4657}</UniqueIdentifier>
-      <Extensions>*.cpp</Extensions>
+      <Extensions>cpp</Extensions>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -23,9 +23,15 @@
     <ClCompile Include="Vec.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Navigator.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Vec.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Navigator.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

@@ -46,10 +46,12 @@
     </ClCompile>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Navigator.cpp" />
     <ClCompile Include="Source\EV3_main.cpp" />
     <ClCompile Include="Vec.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Navigator.h" />
     <ClInclude Include="Vec.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

@@ -8,7 +8,7 @@ private:
 public:
 	/* Constructors */
 	Vec(float x, float y);
-	Vec(double angle, float magnitude);
+	//Vec(double angle, float magnitude);
 
 	/* Operators */
 	Vec operator+(const Vec& other) const; //Return vector that equals 'this' plus 'other'
@@ -20,7 +20,7 @@ public:
 	bool operator==(const Vec& other) const; //Returns whether two vectors have the same x and y
 	
 	/* Vector Properties */
-	float GetAngle() const; //Returns angle relative in radians
+	int GetAngle() const; //Returns angle in degrees [0, 360] !!!NEED TO TEST!!!
 	float GetMagnitudeSq() const; //Return the square of the magnitude
 	float GetMagnitude() const; //Return magnitude
 	

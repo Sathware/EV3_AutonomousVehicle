@@ -1,15 +1,17 @@
 #include "Vec.h"
 #include <cmath>
 
+constexpr float ScalarToDegrees = 180.0f / 3.141592653589793238463f;
+
 Vec::Vec(float xIn, float yIn)
 	: x(xIn), y(yIn)
 {
 }
 
-Vec::Vec(double angle, float magnitude)
-	: x(magnitude * cosf(angle)), y(magnitude * sinf(angle))
-{
-}
+//Vec::Vec(double angle, float magnitude)
+//	: x(magnitude * cosf(angle)), y(magnitude * sinf(angle))
+//{
+//}
 
 Vec Vec::operator+(const Vec& other) const
 {
@@ -49,9 +51,12 @@ bool Vec::operator==(const Vec& other) const
 	return x == other.x && y == other.y;
 }
 
-float Vec::GetAngle() const
+int Vec::GetAngle() const
 {
-	return atan2f(y, x);
+	int degrees = int(atan2f(y, x) * ScalarToDegrees);
+	if (degrees < 0)//Ensures that the angles returned is between [0, 360)
+		degrees += 360;
+	return degrees;
 }
 
 float Vec::GetMagnitudeSq() const

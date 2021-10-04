@@ -1,7 +1,4 @@
 #include "Navigator.h"
-#define left E_Port_A
-#define right E_Port_D
-#include "Navigator.h"
 #include <cmath>
 #define left E_Port_A
 #define right E_Port_D

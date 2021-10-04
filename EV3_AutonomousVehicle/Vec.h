@@ -8,7 +8,7 @@ private:
 public:
 	/* Constructors */
 	Vec(float x, float y);
-	Vec(float angle, float magnitude);
+	Vec(double angle, float magnitude);
 
 	/* Operators */
 	Vec operator+(const Vec& other) const; //Return vector that equals 'this' plus 'other'

@@ -4,8 +4,6 @@
 #define right E_Port_D
 using namespace ev3_c_api;
 
-constexpr float ScalarToRadians = 3.141592653589793238463f / 180.0f;
-
 void Navigator::makeTerminal(int& invalidAngle)
 {
 	while (invalidAngle >= 360)
@@ -15,7 +13,7 @@ void Navigator::makeTerminal(int& invalidAngle)
 }
 
 Navigator::Navigator(Vec destination)
-	: toDestination(destination), direction(1.0f, 0.0f), degrees(0)
+	: toDestination(destination), direction(1.0f, 0.0f), degrees(0), speed(10)
 {
 }
 
@@ -23,7 +21,8 @@ bool Navigator::Turn(const int degreesIn)//NOT TESTED - BEHAVIOR UNKNOWN
 {
 	degrees += degreesIn;
 	makeTerminal(degrees);
-	direction = { cosf(degrees * ScalarToRadians), sinf(degrees * ScalarToRadians) };
+	direction = Vec( cosf(degrees * 3.141592653589793238463f / 180.0f), 
+				  sinf(degrees * 3.141592653589793238463f / 180.0f) );//converts degrees to radians and inputs it into sine and cosine respectively
 	return SpeedMotor_RotationAngle(left, -speed, degreesIn) 
 		&& SpeedMotor_RotationAngle(right, speed, degreesIn);
 }

@@ -8,8 +8,8 @@ private:
 	Vec toDestination;
 	Vec direction;
 	int degrees;// valid values are [0, 360)
+	const char speed;
 	void makeTerminal(int& invalidAngle);
-	static constexpr char speed = 10;
 public:
 	Navigator(Vec destination); //Robot must face directly towards destination
 	bool Turn(const int degreesIn); //Positive rotate left, negative rotate right, must be between [0, 360)

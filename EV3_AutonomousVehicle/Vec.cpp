@@ -6,8 +6,8 @@ Vec::Vec(float xIn, float yIn)
 {
 }
 
-Vec::Vec(float angle, float magnitude)
-	: x(magnitude* cosf(angle)), y(magnitude* sinf(angle))
+Vec::Vec(double angle, float magnitude)
+	: x(magnitude * cosf(angle)), y(magnitude * sinf(angle))
 {
 }
 

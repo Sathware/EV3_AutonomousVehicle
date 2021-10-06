@@ -2,45 +2,51 @@
 #include <cmath>
 #define left E_Port_A
 #define right E_Port_D
-#define epsilon .00001 //constexpr are not allowed so this is the only way; max error in floats
+#define epsilon 3.0f //constexpr are not allowed so this is the only way; max error in cm
 using namespace ev3_c_api;
 
 Navigator::Navigator(Vec destination)
-	: toDestination(destination), direction(1.0f, 0.0f), theta(0.0f)
+	: toDestination(destination), direction(1.0f, 0.0f), theta(0)
 {}
 
-bool Navigator::Turn(const float dtheta, const char speed)
+int spinToWheelRotation(const int dtheta)
 {
-	if (speed > 100 || std::abs(dtheta) <= epsilon)
-		return false;
-
-	theta += dtheta;//update stored angle representing direction
-	direction = Vec(cosf(theta), sinf(theta));// !!!!!! CAN MAKE MORE EFFICIENT !!!!!!!!!!!!!!
-	makeTerminal(theta);//ensure that theta is an angle between [0, 2pi)
-	if (dtheta > 0)
-		return SpeedTwoMotors_Time(left, -speed, right, speed, toMilliSec(dtheta, speed));
-	else
-		return SpeedTwoMotors_Time(left, speed, right, -speed, toMilliSec(dtheta, speed));
-}
-
-int Navigator::toMilliSec(const float angle, const char speed) const
-{
-	//return int(abs(angle) * radiusInCM / (speed in cm per millisecond)) for time to spin in milliseconds
+	//return int(radius of prototype * dtheta / radius of wheel)
 	return 0;
 }
 
-void Navigator::makeTerminal(float& invalidAngle)
+int distanceToWheelRotations(const float distance)
 {
-	while (invalidAngle >= 2 * PI)
-		invalidAngle -= 2 * PI;
+	/* return int(distance / wheel radius * 180.0f / PI)*/
+	return 0;
+}
+
+bool Navigator::Turn(const int dtheta, const char speed)
+{
+	if (speed > 100 || theta == 0)
+		return false;
+
+	theta += dtheta;//update stored angle representing direction
+	direction = Vec(cosf(float(theta) * PI / 180.0f), sinf(float(theta) * PI / 180.0f));// !!!!!! CAN MAKE MORE EFFICIENT !!!!!!!!!!!!!!
+	makeTerminal(theta);//ensure that theta is an angle between [0, 2pi)
+	bool out = SpeedMotor_RotationAngle(left, speed, spinToWheelRotation(dtheta))
+		&& SpeedMotor_RotationAngle(left, -speed, spinToWheelRotation(dtheta));
+	EV3_Sleep(500);
+	return out;
+}
+
+void Navigator::makeTerminal(int& invalidAngle)
+{
+	while (invalidAngle >= 360)
+		invalidAngle -= 360;
 
 	while (invalidAngle < 0)
-		invalidAngle += 2 * PI;
+		invalidAngle += 360;
 }
 
 bool Navigator::isFacingDestination()
 {
-	return std::abs(theta - toDestination.GetAngle()) <= epsilon;
+	return theta - toDestination.GetAngle() != 0;
 }
 
 bool Navigator::FaceDestination()
@@ -65,8 +71,15 @@ bool Navigator::moveToDestination(const char speed)
 	if (speed < 0)
 		return false;
 
+	/*while(isMotorBusy(left, E_MotorType_Large) || isMotorBusy(right, E_MotorType_Large))
+	{}*/
+
 	FaceDestination();
-	int millis = int(toDestination.GetMagnitude() /* / speed in cm per millisec */);
-	toDestination -= direction /* * millis * speed in cm per millisec*/;
-	return SpeedTwoMotors_Time(left, speed, right, speed, millis);
+	float distance = toDestination.GetMagnitude();
+	toDestination -= direction * distance;
+	bool out = SpeedMotor_RotationAngle(left, speed, distanceToWheelRotations(distance)) 
+		&& SpeedMotor_RotationAngle(right, speed, distanceToWheelRotations(distance));
+	EV3_Sleep(500);
+	return out;
 }
+

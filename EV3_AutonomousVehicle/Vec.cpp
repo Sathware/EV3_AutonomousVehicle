@@ -51,9 +51,9 @@ bool Vec::operator==(const Vec& other) const
 
 float Vec::GetAngle() const
 {
-	float degrees = atan2f(y, x);
+	float degrees = int(atan2f(y, x) * 180.0f / PI);
 	if (degrees < 0)//Ensures that the angles returned is between [0, 360)
-		degrees += PI;
+		degrees += 360;
 	return degrees;
 }
 

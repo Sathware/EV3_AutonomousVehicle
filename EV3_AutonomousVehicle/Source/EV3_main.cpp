@@ -4,6 +4,7 @@
 #include "EV3_Thread.h"
 #include "EV3_LCDDisplay.h"
 #include "EV3_Sensor_InfraRed.h"
+#include "..\Navigator.h"
 using namespace ev3_c_api;
 
 //Value of sensor reading is between 0 - 100, this method gets the reading and converts it into a cstring that can be displayed
@@ -20,6 +21,10 @@ void GetIRProximityString(char output[], unsigned char input)
 
 int EV3_main()
 {
+    /*Navigator driver(Vec(2.0f, 0.0f));
+    while (!driver.isAtDestination())
+        driver.moveToDestination();*/
+
     char readingOut[4];
     unsigned char readingIn = GetProximity(E_Port_1);
     GetIRProximityString(readingOut, readingIn);//Takes 'readingOut' and modifies it to be the value 'readingIn'

@@ -1,4 +1,5 @@
 #pragma once
+#define PI 3.1415926535f //constexpr are not allowed so this is the only way
 
 class Vec
 {
@@ -20,7 +21,7 @@ public:
 	bool operator==(const Vec& other) const; //Returns whether two vectors have the same x and y
 	
 	/* Vector Properties */
-	int GetAngle() const; //Returns angle in degrees [0, 360] !!!NEED TO TEST!!!
+	float GetAngle() const; //Returns angle in degrees [0, 360] !!!NEED TO TEST!!!
 	float GetMagnitudeSq() const; //Return the square of the magnitude
 	float GetMagnitude() const; //Return magnitude
 	
